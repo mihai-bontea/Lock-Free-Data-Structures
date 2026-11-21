@@ -5,12 +5,14 @@
 #include <string>
 #include <thread>
 
-struct NoDefault {
+struct NoDefault
+{
     explicit NoDefault(int v) : v(v) {}
     int v;
 };
 
-int main() {
+int main()
+{
     // Basic semantics, full capacity usable.
     {
         spsc_queue<int, 4> q;
