@@ -87,8 +87,11 @@ public:
     noexcept(std::is_nothrow_constructible_v<T, Args&&...>)
     {
         const auto tail = m_tail.load(std::memory_order_relaxed);
+        // Based on the possibly stale data for head_cache, the queue is full
         if (tail - m_head_cache == Capacity)
         {
+            // Refresh the value of head_cache
+            // Pairs with std::memory_order_acquire on the consumer side
             m_head_cache = m_head.load(std::memory_order_acquire);
             if (tail - m_head_cache == Capacity) return false;
         }
