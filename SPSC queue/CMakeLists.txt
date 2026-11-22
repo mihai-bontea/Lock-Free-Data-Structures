@@ -35,5 +35,9 @@ add_executable(spsc_queue_main main.cpp)
 target_link_libraries(spsc_queue_main PRIVATE spsc_queue)
 configure_target(spsc_queue_main)
 
+add_executable(spsc_bench bench.cpp)
+target_link_libraries(spsc_bench PRIVATE spsc_queue)
+target_compile_options(spsc_bench PRIVATE -O2 -march=native)
+
 enable_testing()
 add_test(NAME spsc_queue_main COMMAND spsc_queue_main)
